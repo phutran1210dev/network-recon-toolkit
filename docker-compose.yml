@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: netrecon-db
+    environment:
+      POSTGRES_DB: netrecon
+      POSTGRES_USER: netrecon
+      POSTGRES_PASSWORD: netrecon_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - netrecon-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U netrecon"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Network Recon Application
+  netrecon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: netrecon-app
+    environment:
+      NETRECON_DATABASE_HOST: postgres
+      NETRECON_DATABASE_PORT: 5432
+      NETRECON_DATABASE_USER: netrecon
+      NETRECON_DATABASE_PASSWORD: netrecon_password
+      NETRECON_DATABASE_DBNAME: netrecon
+      NETRECON_DATABASE_SSLMODE: disable
+      NETRECON_LOGGING_LEVEL: info
+      NETRECON_SERVER_HOST: 0.0.0.0
+      NETRECON_SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./configs:/app/configs:ro
+      - scan_results:/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - netrecon-network
+    restart: unless-stopped
+
+  # Redis for caching and session management (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: netrecon-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - netrecon-network
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  # Nginx reverse proxy (optional)
+  nginx:
+    image: nginx:alpine
+    container_name: netrecon-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - netrecon
+    networks:
+      - netrecon-network
+    restart: unless-stopped
+
+networks:
+  netrecon-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  scan_results:
+    driver: local

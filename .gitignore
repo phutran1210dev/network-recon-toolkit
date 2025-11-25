@@ -1,0 +1,68 @@
+.DS_Store
+*.log
+*.tmp
+*.temp
+
+# Binaries
+bin/
+dist/
+build/
+
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Config files with secrets
+config.local.yaml
+.env
+.env.local
+.env.production
+
+# Docker volumes
+docker-data/
+
+# Test coverage
+coverage.out
+coverage.html
+
+# Temporary scan results
+scan_results/
+*.nmap
+*.xml
+*.json
+*.csv
+*.html
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Backup files
+*.bak
+*.backup
+*~

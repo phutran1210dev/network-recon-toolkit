@@ -1,0 +1,42 @@
+database:
+  host: localhost
+  port: 5432
+  user: netrecon
+  password: netrecon_password
+  dbname: netrecon
+  sslmode: disable
+
+logging:
+  level: info
+  format: text
+  file: ""
+
+scanner:
+  default_timeout: 300
+  max_threads: 1000
+  default_ports: "1-1000"
+  presets:
+    quick:
+      scanner: nmap
+      ports: "22,23,25,53,80,110,443,993,995"
+      arguments: "-sS"
+      timing: "4"
+    comprehensive:
+      scanner: nmap
+      ports: "1-65535"
+      arguments: "-sS -sV -O -A"
+      timing: "4"
+    fast:
+      scanner: masscan
+      ports: "1-1000"
+      arguments: ""
+      timing: "4"
+    web:
+      scanner: nmap
+      ports: "80,443,8080,8443,8000,8888"
+      arguments: "-sS -sV --script http-enum"
+      timing: "4"
+
+server:
+  host: localhost
+  port: 8080
