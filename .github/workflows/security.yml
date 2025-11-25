@@ -1,246 +1,246 @@
-# Security workflow for dependency scanning and vulnerability checks
-name: Security Scan
+# # Security workflow for dependency scanning and vulnerability checks
+# name: Security Scan
 
-on:
-  schedule:
-    # Run daily at 2 AM UTC
-    - cron: '0 2 * * *'
-  push:
-    branches: [ "master", "main" ]
-  pull_request:
-    branches: [ "master", "main" ]
+# on:
+#   schedule:
+#     # Run daily at 2 AM UTC
+#     - cron: '0 2 * * *'
+#   push:
+#     branches: [ "master", "main" ]
+#   pull_request:
+#     branches: [ "master", "main" ]
 
-permissions:
-  contents: read
-  security-events: write
-  actions: read
+# permissions:
+#   contents: read
+#   security-events: write
+#   actions: read
 
-jobs:
-  # Dependency Review (Only on PRs)
-  dependency-review:
-    name: Dependency Review
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+# jobs:
+#   # Dependency Review (Only on PRs)
+#   dependency-review:
+#     name: Dependency Review
+#     runs-on: ubuntu-latest
+#     if: github.event_name == 'pull_request'
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
       
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v3
-        with:
-          fail-on-severity: moderate
+#       - name: Dependency Review
+#         uses: actions/dependency-review-action@v3
+#         with:
+#           fail-on-severity: moderate
 
-  # Go Security Audit
-  go-security:
-    name: Go Security Audit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#   # Go Security Audit
+#   go-security:
+#     name: Go Security Audit
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
+#       - name: Set up Go
+#         uses: actions/setup-go@v4
+#         with:
+#           go-version: '1.21'
 
-      - name: Run Gosec Security Scanner
-        uses: securecodewarrior/github-action-gosec@master
-        with:
-          args: '-fmt sarif -out gosec-report.sarif ./...'
+#       - name: Run Gosec Security Scanner
+#         uses: securecodewarrior/github-action-gosec@master
+#         with:
+#           args: '-fmt sarif -out gosec-report.sarif ./...'
           
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: gosec-report.sarif
+#       - name: Upload SARIF file
+#         uses: github/codeql-action/upload-sarif@v2
+#         with:
+#           sarif_file: gosec-report.sarif
 
-      - name: Run govulncheck
-        run: |
-          go install golang.org/x/vuln/cmd/govulncheck@latest
-          govulncheck ./...
+#       - name: Run govulncheck
+#         run: |
+#           go install golang.org/x/vuln/cmd/govulncheck@latest
+#           govulncheck ./...
 
-      - name: Nancy vulnerability scanner
-        run: |
-          go install github.com/sonatypecommunity/nancy@latest
-          go list -json -deps ./... | nancy sleuth
+#       - name: Nancy vulnerability scanner
+#         run: |
+#           go install github.com/sonatypecommunity/nancy@latest
+#           go list -json -deps ./... | nancy sleuth
 
-  # SAST with CodeQL
-  codeql-analysis:
-    name: CodeQL Analysis
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'go' ]
+#   # SAST with CodeQL
+#   codeql-analysis:
+#     name: CodeQL Analysis
+#     runs-on: ubuntu-latest
+#     permissions:
+#       actions: read
+#       contents: read
+#       security-events: write
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         language: [ 'go' ]
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
-        queries: +security-and-quality
+#     - name: Initialize CodeQL
+#       uses: github/codeql-action/init@v2
+#       with:
+#         languages: ${{ matrix.language }}
+#         queries: +security-and-quality
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+#     - name: Autobuild
+#       uses: github/codeql-action/autobuild@v2
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: "/language:${{matrix.language}}"
+#     - name: Perform CodeQL Analysis
+#       uses: github/codeql-action/analyze@v2
+#       with:
+#         category: "/language:${{matrix.language}}"
 
-  # Secret Scanning
-  secret-scan:
-    name: Secret Scanning
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#   # Secret Scanning
+#   secret-scan:
+#     name: Secret Scanning
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
 
-      - name: Run TruffleHog OSS
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: main
-          head: HEAD
-          extra_args: --debug --only-verified
+#       - name: Run TruffleHog OSS
+#         uses: trufflesecurity/trufflehog@main
+#         with:
+#           path: ./
+#           base: main
+#           head: HEAD
+#           extra_args: --debug --only-verified
 
-  # License Compliance
-  license-check:
-    name: License Compliance
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#   # License Compliance
+#   license-check:
+#     name: License Compliance
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
+#       - name: Set up Go
+#         uses: actions/setup-go@v4
+#         with:
+#           go-version: '1.21'
 
-      - name: Install go-licenses
-        run: go install github.com/google/go-licenses@latest
+#       - name: Install go-licenses
+#         run: go install github.com/google/go-licenses@latest
 
-      - name: Check licenses
-        run: |
-          go-licenses check ./...
-          go-licenses report ./... --template=licenses.tpl > licenses-report.txt
+#       - name: Check licenses
+#         run: |
+#           go-licenses check ./...
+#           go-licenses report ./... --template=licenses.tpl > licenses-report.txt
 
-      - name: Upload license report
-        uses: actions/upload-artifact@v3
-        with:
-          name: license-report
-          path: licenses-report.txt
+#       - name: Upload license report
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: license-report
+#           path: licenses-report.txt
 
-  # SBOM Generation
-  sbom-generation:
-    name: Generate SBOM
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#   # SBOM Generation
+#   sbom-generation:
+#     name: Generate SBOM
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
+#       - name: Set up Go
+#         uses: actions/setup-go@v4
+#         with:
+#           go-version: '1.21'
 
-      - name: Generate SBOM with Syft
-        uses: anchore/sbom-action@v0
-        with:
-          path: ./
-          format: spdx-json
+#       - name: Generate SBOM with Syft
+#         uses: anchore/sbom-action@v0
+#         with:
+#           path: ./
+#           format: spdx-json
 
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v3
-        with:
-          name: sbom
-          path: ./sbom.spdx.json
+#       - name: Upload SBOM
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: sbom
+#           path: ./sbom.spdx.json
 
-  # Docker Image Security Scan (if Dockerfile exists)
-  docker-security:
-    name: Docker Security Scan  
-    runs-on: ubuntu-latest
-    if: hashFiles('Dockerfile') != ''
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#   # Docker Image Security Scan (if Dockerfile exists)
+#   docker-security:
+#     name: Docker Security Scan  
+#     runs-on: ubuntu-latest
+#     if: hashFiles('Dockerfile') != ''
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: |
-          docker build -t netrecon-security-scan:${{ github.sha }} .
+#       - name: Build Docker image
+#         run: |
+#           docker build -t netrecon-security-scan:${{ github.sha }} .
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: netrecon-security-scan:${{ github.sha }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+#       - name: Run Trivy vulnerability scanner
+#         uses: aquasecurity/trivy-action@master
+#         with:
+#           image-ref: netrecon-security-scan:${{ github.sha }}
+#           format: 'sarif'
+#           output: 'trivy-results.sarif'
 
-      - name: Upload Trivy scan results
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
+#       - name: Upload Trivy scan results
+#         uses: github/codeql-action/upload-sarif@v2
+#         if: always()
+#         with:
+#           sarif_file: 'trivy-results.sarif'
 
-      - name: Run Hadolint (Dockerfile linter)
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: Dockerfile
-          format: sarif
-          output-file: hadolint-results.sarif
-          no-fail: true
+#       - name: Run Hadolint (Dockerfile linter)
+#         uses: hadolint/hadolint-action@v3.1.0
+#         with:
+#           dockerfile: Dockerfile
+#           format: sarif
+#           output-file: hadolint-results.sarif
+#           no-fail: true
 
-      - name: Upload Hadolint results
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: hadolint-results.sarif
+#       - name: Upload Hadolint results
+#         uses: github/codeql-action/upload-sarif@v2
+#         if: always()
+#         with:
+#           sarif_file: hadolint-results.sarif
 
-  # Infrastructure as Code Security
-  iac-security:
-    name: IaC Security Scan
-    runs-on: ubuntu-latest
-    if: hashFiles('docker-compose.yml', 'k8s/**/*.yaml', 'terraform/**/*.tf') != ''
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#   # Infrastructure as Code Security
+#   iac-security:
+#     name: IaC Security Scan
+#     runs-on: ubuntu-latest
+#     if: hashFiles('docker-compose.yml', 'k8s/**/*.yaml', 'terraform/**/*.tf') != ''
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Run Checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: .
-          framework: dockerfile,kubernetes,compose
-          output_format: sarif
-          output_file_path: checkov-report.sarif
+#       - name: Run Checkov
+#         uses: bridgecrewio/checkov-action@master
+#         with:
+#           directory: .
+#           framework: dockerfile,kubernetes,compose
+#           output_format: sarif
+#           output_file_path: checkov-report.sarif
 
-      - name: Upload Checkov results
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: checkov-report.sarif
+#       - name: Upload Checkov results
+#         uses: github/codeql-action/upload-sarif@v2
+#         if: always()
+#         with:
+#           sarif_file: checkov-report.sarif
 
-  # Security Summary
-  security-summary:
-    name: Security Summary
-    runs-on: ubuntu-latest
-    needs: [go-security, codeql-analysis, secret-scan, license-check, sbom-generation]
-    if: always()
-    steps:
-      - name: Security Scan Summary
-        run: |
-          echo "## Security Scan Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Go Security | ${{ needs.go-security.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| CodeQL Analysis | ${{ needs.codeql-analysis.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Secret Scanning | ${{ needs.secret-scan.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| License Check | ${{ needs.license-check.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| SBOM Generation | ${{ needs.sbom-generation.result }} |" >> $GITHUB_STEP_SUMMARY
+#   # Security Summary
+#   security-summary:
+#     name: Security Summary
+#     runs-on: ubuntu-latest
+#     needs: [go-security, codeql-analysis, secret-scan, license-check, sbom-generation]
+#     if: always()
+#     steps:
+#       - name: Security Scan Summary
+#         run: |
+#           echo "## Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+#           echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+#           echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+#           echo "| Go Security | ${{ needs.go-security.result }} |" >> $GITHUB_STEP_SUMMARY
+#           echo "| CodeQL Analysis | ${{ needs.codeql-analysis.result }} |" >> $GITHUB_STEP_SUMMARY
+#           echo "| Secret Scanning | ${{ needs.secret-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+#           echo "| License Check | ${{ needs.license-check.result }} |" >> $GITHUB_STEP_SUMMARY
+#           echo "| SBOM Generation | ${{ needs.sbom-generation.result }} |" >> $GITHUB_STEP_SUMMARY

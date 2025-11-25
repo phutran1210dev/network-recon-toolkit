@@ -1,72 +1,72 @@
-# Dependabot configuration for automated dependency updates
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# # Dependabot configuration for automated dependency updates
+# # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
-version: 2
-updates:
-  # Go modules
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "04:00"
-    open-pull-requests-limit: 5
-    reviewers:
-      - "phutran1210dev"
-    labels:
-      - "dependencies"
-      - "go"
-    commit-message:
-      prefix: "deps(go)"
-      include: "scope"
-    rebase-strategy: "auto"
+# version: 2
+# updates:
+#   # Go modules
+#   - package-ecosystem: "gomod"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"
+#       day: "monday"
+#       time: "04:00"
+#     open-pull-requests-limit: 5
+#     reviewers:
+#       - "phutran1210dev"
+#     labels:
+#       - "dependencies"
+#       - "go"
+#     commit-message:
+#       prefix: "deps(go)"
+#       include: "scope"
+#     rebase-strategy: "auto"
 
-  # Docker dependencies
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "04:30"
-    open-pull-requests-limit: 3
-    reviewers:
-      - "phutran1210dev"
-    labels:
-      - "dependencies"
-      - "docker"
-    commit-message:
-      prefix: "deps(docker)"
-      include: "scope"
+#   # Docker dependencies
+#   - package-ecosystem: "docker"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"
+#       day: "monday"
+#       time: "04:30"
+#     open-pull-requests-limit: 3
+#     reviewers:
+#       - "phutran1210dev"
+#     labels:
+#       - "dependencies"
+#       - "docker"
+#     commit-message:
+#       prefix: "deps(docker)"
+#       include: "scope"
 
-  # Docker Compose dependencies
-  - package-ecosystem: "docker"
-    directory: "/docker"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "05:00"
-    open-pull-requests-limit: 3
-    reviewers:
-      - "phutran1210dev"
-    labels:
-      - "dependencies"
-      - "docker"
-    commit-message:
-      prefix: "deps(docker-compose)"
+#   # Docker Compose dependencies
+#   - package-ecosystem: "docker"
+#     directory: "/docker"
+#     schedule:
+#       interval: "weekly"
+#       day: "monday"
+#       time: "05:00"
+#     open-pull-requests-limit: 3
+#     reviewers:
+#       - "phutran1210dev"
+#     labels:
+#       - "dependencies"
+#       - "docker"
+#     commit-message:
+#       prefix: "deps(docker-compose)"
 
-  # GitHub Actions dependencies
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "tuesday"
-      time: "04:00"
-    open-pull-requests-limit: 5
-    reviewers:
-      - "phutran1210dev"
-    labels:
-      - "dependencies"
-      - "github-actions"
-    commit-message:
-      prefix: "deps(actions)"
-      include: "scope"
+#   # GitHub Actions dependencies
+#   - package-ecosystem: "github-actions"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"
+#       day: "tuesday"
+#       time: "04:00"
+#     open-pull-requests-limit: 5
+#     reviewers:
+#       - "phutran1210dev"
+#     labels:
+#       - "dependencies"
+#       - "github-actions"
+#     commit-message:
+#       prefix: "deps(actions)"
+#       include: "scope"
