@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -12,6 +13,14 @@ import (
 	"github.com/netrecon/toolkit/internal/scanner"
 	"github.com/netrecon/toolkit/pkg/masscan"
 	"github.com/netrecon/toolkit/pkg/nmap"
+)
+
+// Version information - set via ldflags during build
+var (
+	version = "dev"
+	commit  = "unknown"
+	date    = "unknown"
+	builtBy = "unknown"
 )
 
 var (
@@ -54,6 +63,7 @@ func init() {
 		newResultCmd(),
 		newConfigCmd(),
 		newServerCmd(),
+		newVersionCmd(),
 	)
 }
 
@@ -285,4 +295,24 @@ func newServerCmd() *cobra.Command {
 	}
 
 	return serverCmd
+}
+
+// newVersionCmd creates the version command
+func newVersionCmd() *cobra.Command {
+	versionCmd := &cobra.Command{
+		Use:   "version",
+		Short: "Show version information",
+		Long:  "Display version, build information, and system details",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("Network Recon Toolkit\n")
+			fmt.Printf("Version:    %s\n", version)
+			fmt.Printf("Commit:     %s\n", commit)
+			fmt.Printf("Built:      %s\n", date)
+			fmt.Printf("Built by:   %s\n", builtBy)
+			fmt.Printf("Go version: %s\n", runtime.Version())
+			fmt.Printf("OS/Arch:    %s/%s\n", runtime.GOOS, runtime.GOARCH)
+		},
+	}
+
+	return versionCmd
 }

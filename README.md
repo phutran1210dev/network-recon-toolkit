@@ -1,85 +1,85 @@
 # Network Reconnaissance Toolkit 🔍
 
-## 🎯 **Mục tiêu dự án (Project Goals)**
+## 🎯 **Project Goals**
 
-Network Reconnaissance Toolkit là một **bộ công cụ trinh sát mạng toàn diện** được thiết kế để:
+Network Reconnaissance Toolkit is a **comprehensive network reconnaissance suite** designed to:
 
-- **🔍 Khám phá tài sản mạng tự động** - Tự động phát hiện và lập bản đồ các thiết bị, dịch vụ trong mạng
-- **🛡️ Đánh giá bảo mật hệ thống** - Phân tích lỗ hổng, cấu hình yếu, và rủi ro bảo mật
-- **📊 Quản lý thông tin tập trung** - Lưu trữ, phân loại và báo cáo kết quả quét mạng có hệ thống
-- **⚡ Tối ưu hóa hiệu suất quét** - Tích hợp nhiều công cụ quét để đạt tốc độ và độ chính xác cao nhất
-- **🎨 Đa dạng định dạng xuất** - Hỗ trợ nhiều format báo cáo cho các mục đích sử dụng khác nhau
+- **🔍 Automated Network Asset Discovery** - Automatically detect and map devices, services within networks
+- **🛡️ System Security Assessment** - Analyze vulnerabilities, weak configurations, and security risks
+- **📊 Centralized Information Management** - Store, categorize, and report network scan results systematically
+- **⚡ Optimized Scanning Performance** - Integrate multiple scanning tools for maximum speed and accuracy
+- **🎨 Diverse Output Formats** - Support multiple report formats for different use cases
 
-## 🌟 **Tổng quan dự án (Project Overview)**
+## 🌟 **Project Overview**
 
-Đây là một **enterprise-grade network security toolkit** được xây dựng với Go, cung cấp:
+This is an **enterprise-grade network security toolkit** built with Go, providing:
 
-### **🏗️ Kiến trúc hiện đại**
-- **Microservices architecture** với Docker containerization
-- **Database-backed storage** sử dụng PostgreSQL
-- **RESTful API** và web interface
-- **CLI-first design** với automation support
+### **🏗️ Modern Architecture**
+- **Microservices architecture** with Docker containerization
+- **Database-backed storage** using PostgreSQL
+- **RESTful API** and web interface
+- **CLI-first design** with automation support
 
-### **🔧 Tích hợp công cụ mạnh mẽ**
-- **Nmap** - Industry standard cho network discovery & security auditing
-- **Masscan** - High-speed port scanner cho large-scale networks
-- **Custom parsers** - Xử lý và chuẩn hóa kết quả từ multiple sources
+### **🔧 Powerful Tool Integration**
+- **Nmap** - Industry standard for network discovery & security auditing
+- **Masscan** - High-speed port scanner for large-scale networks
+- **Custom parsers** - Process and normalize results from multiple sources
 
-### **📈 Khả năng mở rộng**
-- **Horizontal scaling** với Docker Swarm/Kubernetes
-- **Plugin architecture** để thêm scanners mới
-- **API-driven** cho integration với security platforms
+### **📈 Scalability**
+- **Horizontal scaling** with Docker Swarm/Kubernetes
+- **Plugin architecture** for adding new scanners
+- **API-driven** for integration with security platforms
 - **Cloud-ready** deployment options
 
 ## 🚀 **Use Cases & Applications**
 
-### **👥 Đối tượng sử dụng (Target Audience)**
+### **👥 Target Audience**
 
-- **🔐 Security Engineers** - Đánh giá bảo mật infrastructure, penetration testing
+- **🔐 Security Engineers** - Infrastructure security assessment, penetration testing
 - **🌐 Network Administrators** - Inventory management, network mapping, compliance auditing  
 - **💼 IT Teams** - Asset discovery, service monitoring, vulnerability assessment
 - **🎓 Security Researchers** - Network analysis, security research, educational purposes
 - **🏢 Enterprises** - Large-scale network scanning, security compliance, risk management
 
-### **💼 Các trường hợp sử dụng thực tế**
+### **💼 Real-world Use Cases**
 
 | Use Case | Description | Scanner | Output |
 |----------|-------------|---------|---------|
-| **🔍 Asset Discovery** | Khám phá tất cả thiết bị trong mạng doanh nghiệp | Nmap + Masscan | JSON + Database |
-| **🛡️ Security Audit** | Đánh giá bảo mật định kỳ với service enumeration | Nmap | HTML Report |
-| **⚡ Fast Scanning** | Quét nhanh large networks (Class A/B) | Masscan | CSV + Database |
-| **📊 Compliance Report** | Báo cáo tuân thủ bảo mật cho management | Nmap | HTML + PDF |
-| **🔎 Targeted Analysis** | Phân tích chi tiết specific hosts/services | Nmap | XML + JSON |
+| **🔍 Asset Discovery** | Discover all devices in enterprise networks | Nmap + Masscan | JSON + Database |
+| **🛡️ Security Audit** | Regular security assessment with service enumeration | Nmap | HTML Report |
+| **⚡ Fast Scanning** | Rapid scanning of large networks (Class A/B) | Masscan | CSV + Database |
+| **📊 Compliance Report** | Security compliance reporting for management | Nmap | HTML + PDF |
+| **🔎 Targeted Analysis** | Detailed analysis of specific hosts/services | Nmap | XML + JSON |
 
 ## ✨ **Core Features**
 
 ### **🔧 Multi-Scanner Integration**
 
-- **Nmap Scanner** - Industry standard cho network discovery & security auditing
-- **Masscan Scanner** - High-speed port scanning cho large-scale networks  
-- **Custom Parsers** - Unified output format từ multiple scan engines
+- **Nmap Scanner** - Industry standard for network discovery & security auditing
+- **Masscan Scanner** - High-speed port scanning for large-scale networks  
+- **Custom Parsers** - Unified output format from multiple scan engines
 - **Scanner Management** - Dynamic scanner selection based on target type
 
 ### **💾 Enterprise Data Management**
 
-- **PostgreSQL Backend** - Production-ready database với full ACID compliance
-- **Structured Storage** - Normalized schema cho hosts, ports, services, vulnerabilities
+- **PostgreSQL Backend** - Production-ready database with full ACID compliance
+- **Structured Storage** - Normalized schema for hosts, ports, services, vulnerabilities
 - **Historical Data** - Track changes over time, trending analysis
-- **Data Export** - Multiple formats (JSON, XML, CSV, HTML) cho different stakeholders
+- **Data Export** - Multiple formats (JSON, XML, CSV, HTML) for different stakeholders
 
 ### **🎛️ Advanced Configuration**
 
-- **YAML Configuration** - Human-readable config files với environment override
-- **Scan Presets** - Pre-configured templates cho common scenarios
-- **Timing Control** - Fine-tuned performance settings cho different network conditions
+- **YAML Configuration** - Human-readable config files with environment override
+- **Scan Presets** - Pre-configured templates for common scenarios
+- **Timing Control** - Fine-tuned performance settings for different network conditions
 - **Custom Arguments** - Full control over underlying scanner parameters
 
 ### **🌐 Modern Architecture**
 
-- **CLI-First Design** - Comprehensive command-line interface với automation support
-- **RESTful API** - Web interface cho remote management và integration
-- **Docker Support** - Complete containerized deployment với multi-service architecture  
-- **Microservices** - Modular design với independent scaling capabilities
+- **CLI-First Design** - Comprehensive command-line interface with automation support
+- **RESTful API** - Web interface for remote management and integration
+- **Docker Support** - Complete containerized deployment with multi-service architecture  
+- **Microservices** - Modular design with independent scaling capabilities
 
 ## Quick Start
 
@@ -460,17 +460,17 @@ export NETRECON_LOGGING_LEVEL=debug
 
 ## 🎯 **Project Vision & Roadmap**
 
-### **🌟 Tầm nhìn dự án (Project Vision)**
+### **🌟 Project Vision**
 
-**"Trở thành the de-facto standard cho enterprise network reconnaissance và security assessment trong môi trường modern infrastructure"**
+**"Become the de-facto standard for enterprise network reconnaissance and security assessment in modern infrastructure environments"**
 
-Chúng tôi hướng tới xây dựng một platform toàn diện có thể:
+We aim to build a comprehensive platform that can:
 
-- **🔄 Tự động hóa hoàn toàn** quy trình network discovery và security assessment
-- **🎯 Cung cấp actionable insights** thay vì chỉ raw scan data  
-- **🔗 Tích hợp seamlessly** với existing security toolchains và SIEM systems
-- **📈 Scale infinitely** từ single host đến enterprise-wide deployments
-- **🤖 Leverage AI/ML** cho intelligent vulnerability prioritization
+- **🔄 Fully automate** network discovery and security assessment workflows
+- **🎯 Provide actionable insights** rather than just raw scan data  
+- **🔗 Integrate seamlessly** with existing security toolchains and SIEM systems
+- **📈 Scale infinitely** from single host to enterprise-wide deployments
+- **🤖 Leverage AI/ML** for intelligent vulnerability prioritization
 
 ### **🗺️ Development Roadmap**
 
@@ -483,27 +483,27 @@ Chúng tôi hướng tới xây dựng một platform toàn diện có thể:
 - [x] Configuration management và environment variables
 
 #### **Phase 2: Enterprise Features** 🚧 **(In Progress - Q1 2025)**
-- [ ] **Web Dashboard** - Modern React-based UI với real-time updates
-- [ ] **REST API** - Complete API coverage cho all functionality
+- [ ] **Web Dashboard** - Modern React-based UI with real-time updates
+- [ ] **REST API** - Complete API coverage for all functionality
 - [ ] **User Management** - Role-based access control (RBAC)
-- [ ] **Scheduled Scans** - Automated recurring scans với cron-like scheduling  
-- [ ] **Alert System** - Notifications cho new services/vulnerabilities
-- [ ] **Reporting Engine** - Executive summaries và compliance reports
+- [ ] **Scheduled Scans** - Automated recurring scans with cron-like scheduling  
+- [ ] **Alert System** - Notifications for new services/vulnerabilities
+- [ ] **Reporting Engine** - Executive summaries and compliance reports
 
 #### **Phase 3: Advanced Analytics** 📊 **(Planned - Q2 2025)**
-- [ ] **ML-Powered Analysis** - Anomaly detection và risk scoring
-- [ ] **Trend Analysis** - Historical data analysis và change tracking
+- [ ] **ML-Powered Analysis** - Anomaly detection and risk scoring
+- [ ] **Trend Analysis** - Historical data analysis and change tracking
 - [ ] **Integration Hub** - SIEM connectors (Splunk, ELK, etc.)
-- [ ] **Vulnerability Correlation** - CVE matching và CVSS scoring
+- [ ] **Vulnerability Correlation** - CVE matching and CVSS scoring
 - [ ] **Network Mapping** - Visual topology discovery
 - [ ] **Asset Classification** - Automatic categorization based on services
 
 #### **Phase 4: Cloud & Scale** ☁️ **(Planned - Q3 2025)**
-- [ ] **Kubernetes Operator** - Native K8s deployment và management
+- [ ] **Kubernetes Operator** - Native K8s deployment and management
 - [ ] **Cloud Integrations** - AWS/Azure/GCP service discovery
 - [ ] **Distributed Scanning** - Multi-node coordinated scans
-- [ ] **Stream Processing** - Real-time data pipeline với Apache Kafka
-- [ ] **GraphQL API** - Modern query interface cho complex data relationships
+- [ ] **Stream Processing** - Real-time data pipeline with Apache Kafka
+- [ ] **GraphQL API** - Modern query interface for complex data relationships
 - [ ] **Mobile App** - iOS/Android companion app
 
 ### **🎖️ Success Metrics**
@@ -512,13 +512,13 @@ Chúng tôi hướng tới xây dựng một platform toàn diện có thể:
 |--------|---------|----------------|
 | **Performance** | 1K ports/sec | 100K ports/sec |
 | **Scalability** | Single host | 10K+ concurrent targets |
-| **Accuracy** | 95% service detection | 99.5% với ML enhancement |
+| **Accuracy** | 95% service detection | 99.5% with ML enhancement |
 | **Coverage** | Nmap + Masscan | 10+ integrated scanners |
 | **Users** | Developer tool | Enterprise adoption |
 
 ## 🤝 **Contributing**
 
-Chúng tôi welcome contributions từ security community! 
+We welcome contributions from the security community! 
 
 ### **🎯 Priority Areas**
 - **Scanner Plugins** - New scanner integrations (Zmap, RustScan, etc.)
@@ -531,10 +531,10 @@ Chúng tôi welcome contributions từ security community!
 
 1. **🍴 Fork the repository**
 2. **🌿 Create feature branch** (`git checkout -b feature/amazing-feature`)
-3. **💻 Make your changes** với proper testing
-4. **✅ Run tests** (`go test ./...`) và linting
+3. **💻 Make your changes** with proper testing
+4. **✅ Run tests** (`go test ./...`) and linting
 5. **📝 Update documentation** if needed  
-6. **🚀 Submit pull request** với detailed description
+6. **🚀 Submit pull request** with detailed description
 
 ### **🛠️ Development Setup**
 
@@ -564,7 +564,7 @@ docker-compose -f docker-compose.dev.yml up -d
 
 ### **📚 Development Guidelines**
 - **Code Quality** - Follow Go best practices, maintain 80%+ test coverage
-- **Documentation** - Document all public APIs với examples  
+- **Documentation** - Document all public APIs with examples  
 - **Security** - Security-first development, regular dependency updates
 - **Performance** - Benchmark critical paths, optimize for scale
 - **Compatibility** - Support latest 3 Go versions, backward compatibility
@@ -575,8 +575,8 @@ docker-compose -f docker-compose.dev.yml up -d
 
 | Operation | Specification | Real-world Performance |
 |-----------|---------------|----------------------|
-| **Port Scanning** | Up to 100K ports/sec với Masscan | Tested on /16 networks |
-| **Service Detection** | 99.5% accuracy với Nmap + NSE | 10K+ services database |
+| **Port Scanning** | Up to 100K ports/sec with Masscan | Tested on /16 networks |
+| **Service Detection** | 99.5% accuracy with Nmap + NSE | 10K+ services database |
 | **Concurrent Targets** | 1K+ simultaneous hosts | Multi-threaded architecture |
 | **Database Operations** | 10K+ records/sec insert | PostgreSQL optimized |
 | **Memory Usage** | <512MB base + 1MB/1K targets | Efficient memory management |
@@ -585,25 +585,25 @@ docker-compose -f docker-compose.dev.yml up -d
 ### **🏗️ System Requirements**
 
 #### **Minimum Requirements**
-- **OS**: Linux, macOS, Windows (với WSL)
-- **RAM**: 2GB (4GB recommended cho large scans)  
+- **OS**: Linux, macOS, Windows (with WSL)
+- **RAM**: 2GB (4GB recommended for large scans)  
 - **CPU**: 2 cores (4+ cores recommended)
 - **Storage**: 1GB (+ scan data storage)
-- **Network**: 10Mbps (100Mbps+ cho optimal performance)
+- **Network**: 10Mbps (100Mbps+ for optimal performance)
 
 #### **Production Deployment**
-- **OS**: Linux (Ubuntu 20.04+ hoặc RHEL 8+)
-- **RAM**: 16GB+ (32GB cho enterprise environments)
-- **CPU**: 8+ cores với modern instruction sets
-- **Storage**: SSD với 100GB+ (database growth planning)
-- **Network**: Gigabit Ethernet với low latency
+- **OS**: Linux (Ubuntu 20.04+ or RHEL 8+)
+- **RAM**: 16GB+ (32GB for enterprise environments)
+- **CPU**: 8+ cores with modern instruction sets
+- **Storage**: SSD with 100GB+ (database growth planning)
+- **Network**: Gigabit Ethernet with low latency
 
 ### **🔄 Integration Capabilities**
 
 #### **Supported Input Sources**
 - **Network Ranges** - CIDR notation (192.168.1.0/24)
 - **Host Lists** - CSV, text files, database imports
-- **Domain Names** - DNS resolution và subdomain enumeration
+- **Domain Names** - DNS resolution and subdomain enumeration
 - **Cloud APIs** - AWS EC2, Azure VMs, GCP instances (planned)
 
 #### **Output Integrations**
@@ -630,28 +630,28 @@ docker-compose -f docker-compose.dev.yml up -d
 ### **🔒 Operational Security**
 
 - **🎯 Authorized Scanning Only** - Run scans only on networks you own or have explicit permission to test
-- **📊 Rate Limiting Awareness** - Monitor network impact và adjust scan timing appropriately  
+- **📊 Rate Limiting Awareness** - Monitor network impact and adjust scan timing appropriately  
 - **🥷 Stealth Operations** - Use appropriate timing templates to avoid detection by IDS/IPS systems
-- **🔐 Secure Data Storage** - Encrypt sensitive scan data at rest và in transit
+- **🔐 Secure Data Storage** - Encrypt sensitive scan data at rest and in transit
 - **📋 Responsible Disclosure** - Follow coordinated vulnerability disclosure for discovered issues
 - **⚖️ Legal Compliance** - Understand legal implications of network scanning in your jurisdiction
 
 ### **🏢 Enterprise Security**
 
-- **👤 Access Control** - Implement RBAC với least privilege principles
-- **📝 Audit Logging** - Complete audit trail cho all scanning activities
+- **👤 Access Control** - Implement RBAC with least privilege principles
+- **📝 Audit Logging** - Complete audit trail for all scanning activities
 - **🔌 Network Segmentation** - Deploy scanners in appropriate network zones
 - **🛡️ Data Classification** - Apply appropriate data handling based on sensitivity
-- **📊 Compliance Frameworks** - Align với SOC2, ISO27001, NIST standards
-- **🔄 Regular Updates** - Maintain current versions và security patches
+- **📊 Compliance Frameworks** - Align with SOC2, ISO27001, NIST standards
+- **🔄 Regular Updates** - Maintain current versions and security patches
 
 ### **⚠️ Risk Mitigation**
 
-- **🎚️ Gradual Rollout** - Start với low-impact scans before full deployment
-- **📈 Performance Monitoring** - Track system resources và network utilization
-- **🔄 Backup Procedures** - Regular database backups với tested restore procedures
+- **🎚️ Gradual Rollout** - Start with low-impact scans before full deployment
+- **📈 Performance Monitoring** - Track system resources and network utilization
+- **🔄 Backup Procedures** - Regular database backups with tested restore procedures
 - **🚨 Incident Response** - Defined procedures for scan-related issues
-- **📞 Emergency Contacts** - 24/7 support channels cho critical environments
+- **📞 Emergency Contacts** - 24/7 support channels for critical environments
 
 ## License
 
