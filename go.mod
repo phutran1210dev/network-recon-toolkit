@@ -1,12 +1,12 @@
 module github.com/netrecon/toolkit
 
-go 1.21
+go 1.23
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.16.2
-	github.com/sirupsen/logrus v1.9.4
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.11.1
+	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.17.0
 )
